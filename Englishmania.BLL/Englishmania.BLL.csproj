@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Englishmania.DLL\Englishmania.DAL.csproj" />
+    <ProjectReference Include="..\Englishmania.DAL\Englishmania.DAL.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,21 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Englishmania.DAL.EF;
 using Englishmania.DAL.Interfaces;
+using Englishmania.DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Englishmania
+namespace Englishmania.Web
 {
     public class Startup
     {
@@ -27,7 +24,7 @@ namespace Englishmania
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -43,9 +40,9 @@ namespace Englishmania
 
             var builder = new ContainerBuilder();
             builder.RegisterGeneric(typeof(GenericRepository<>)).As(typeof(IRepository<>));
-            builder.RegisterType<GameService>().As<IGameService>();
-            builder.RegisterType<CommentService>().As<ICommentService>();
-            builder.RegisterType<EfUnitOfWork>().As<IUnitOfWork>();
+            //builder.RegisterType<GameService>().As<IGameService>();
+            //builder.RegisterType<CommentService>().As<ICommentService>();
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             builder.Populate(services);
 
             var container = builder.Build();
@@ -61,7 +58,6 @@ namespace Englishmania
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
 
@@ -73,7 +69,7 @@ namespace Englishmania
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller}/{action}/{id?}");
             });
         }
     }

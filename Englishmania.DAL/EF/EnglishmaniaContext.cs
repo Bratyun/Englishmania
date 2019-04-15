@@ -16,6 +16,7 @@ namespace Englishmania.DAL.EF
         public DbSet<Topic> Topics { get; set; }
         public DbSet<TopicVocabulary> TopicVocabularies { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<UserVocabulary> UserVocabularies { get; set; }
         public DbSet<Vocabulary> Vocabularies { get; set; }
         public DbSet<Word> Words { get; set; }
         public DbSet<WordText> WordTexts { get; set; }
@@ -33,6 +34,8 @@ namespace Englishmania.DAL.EF
                 .HasKey(t => new { t.WordId, t.UserId });
             modelBuilder.Entity<WordVocabulary>()
                 .HasKey(t => new { t.WordId, t.VocabularyId });
+            modelBuilder.Entity<UserVocabulary>()
+                .HasKey(t => new { t.UserId, t.VocabularyId });
         }
     }
 }

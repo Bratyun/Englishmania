@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Englishmania.Web", "English
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Englishmania.BLL", "Englishmania.BLL\Englishmania.BLL.csproj", "{057381ED-0103-468B-B585-3C5A66DE2859}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Englishmania.DAL", "Englishmania.DLL\Englishmania.DAL.csproj", "{9A5DF4B2-BFD5-433D-9431-E897218BE8B5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Englishmania.DAL", "Englishmania.DAL\Englishmania.DAL.csproj", "{6EAA4294-64BB-4257-A912-49D2FF633F16}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{057381ED-0103-468B-B585-3C5A66DE2859}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{057381ED-0103-468B-B585-3C5A66DE2859}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{057381ED-0103-468B-B585-3C5A66DE2859}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9A5DF4B2-BFD5-433D-9431-E897218BE8B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A5DF4B2-BFD5-433D-9431-E897218BE8B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A5DF4B2-BFD5-433D-9431-E897218BE8B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A5DF4B2-BFD5-433D-9431-E897218BE8B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EAA4294-64BB-4257-A912-49D2FF633F16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EAA4294-64BB-4257-A912-49D2FF633F16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EAA4294-64BB-4257-A912-49D2FF633F16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EAA4294-64BB-4257-A912-49D2FF633F16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
