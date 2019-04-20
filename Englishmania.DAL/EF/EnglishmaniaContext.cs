@@ -36,6 +36,9 @@ namespace Englishmania.DAL.EF
                 .HasKey(t => new { t.WordId, t.VocabularyId });
             modelBuilder.Entity<UserVocabulary>()
                 .HasKey(t => new { t.UserId, t.VocabularyId });
+            modelBuilder.Entity<User>(entity => {
+                entity.HasIndex(t => t.Login).IsUnique();
+            });
         }
     }
 }

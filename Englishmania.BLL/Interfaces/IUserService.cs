@@ -9,5 +9,6 @@ namespace Englishmania.BLL.Interfaces
     {
         void Create(User model);
         bool IsExist(string login, string passwordHash);
+        User Get(string login, string passwordHash);
     }
 }

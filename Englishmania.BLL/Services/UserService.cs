@@ -18,12 +18,18 @@ namespace Englishmania.BLL.Services
 
         public void Create(User model)
         {
-            throw new NotImplementedException();
+            _unitOfWork.UserRepository.Create(model);
+            _unitOfWork.Commit();
         }
 
         public bool IsExist(string login, string passwordHash)
         {
-            throw new NotImplementedException();
+            return Get(login, passwordHash) == null;
+        }
+
+        public User Get(string login, string passwordHash)
+        {
+            return _unitOfWork.UserRepository.Get(x => x.Login == login && x.PasswordHash == passwordHash);
         }
     }
 }
