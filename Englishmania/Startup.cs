@@ -42,7 +42,7 @@ namespace Englishmania.Web
             builder.RegisterGeneric(typeof(GenericRepository<>)).As(typeof(IRepository<>));
             //builder.RegisterType<GameService>().As<IGameService>();
             //builder.RegisterType<CommentService>().As<ICommentService>();
-            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().PropertiesAutowired();
             builder.Populate(services);
 
             var container = builder.Build();

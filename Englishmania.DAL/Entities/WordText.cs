@@ -1,6 +1,6 @@
 ﻿namespace Englishmania.DAL.Entities
 {
-    public class WordText
+    public class WordText : BaseEntity
     {
         public int WordId { get; set; }
         public int TextId { get; set; }

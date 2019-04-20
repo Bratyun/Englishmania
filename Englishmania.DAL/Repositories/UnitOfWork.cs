@@ -13,17 +13,17 @@ namespace Englishmania.DAL.Repositories
             _dbContext = dbContext;
         }
 
-        public IRepository<Level> LevelRepository => new GenericRepository<Level>(_dbContext);
-        public IRepository<Text> TextRepository => new GenericRepository<Text>(_dbContext);
-        public IRepository<Topic> TopicRepository => new GenericRepository<Topic>(_dbContext);
-        public IRepository<TopicVocabulary> TopicVocabularyRepository => new GenericRepository<TopicVocabulary>(_dbContext);
-        public IRepository<User> UserRepository => new GenericRepository<User>(_dbContext);
-        public IRepository<UserVocabulary> UserVocabularyRepository => new GenericRepository<UserVocabulary>(_dbContext);
-        public IRepository<Vocabulary> VocabularyRepository => new GenericRepository<Vocabulary>(_dbContext);
-        public IRepository<Word> WordRepository => new GenericRepository<Word>(_dbContext);
-        public IRepository<WordText> WordTextRepository => new GenericRepository<WordText>(_dbContext);
-        public IRepository<WordUser> WordUserRepository => new GenericRepository<WordUser>(_dbContext);
-        public IRepository<WordVocabulary> WordVocabularyRepository => new GenericRepository<WordVocabulary>(_dbContext);
+        public IRepository<Level> LevelRepository { get; set; }
+        public IRepository<Text> TextRepository { get; set; }
+        public IRepository<Topic> TopicRepository { get; set; }
+        public IRepository<TopicVocabulary> TopicVocabularyRepository { get; set; }
+        public IRepository<User> UserRepository { get; set; }
+        public IRepository<UserVocabulary> UserVocabularyRepository { get; set; }
+        public IRepository<Vocabulary> VocabularyRepository { get; set; }
+        public IRepository<Word> WordRepository { get; set; }
+        public IRepository<WordText> WordTextRepository { get; set; }
+        public IRepository<WordUser> WordUserRepository { get; set; }
+        public IRepository<WordVocabulary> WordVocabularyRepository { get; set; }
 
         public void Commit()
         {

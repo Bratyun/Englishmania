@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Englishmania.DAL.EF;
+using Englishmania.DAL.Entities;
 using Englishmania.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Englishmania.DAL.Repositories
 {
-    public class GenericRepository<T> : IRepository<T> where T : class
+    public class GenericRepository<T> : IRepository<T> where T : BaseEntity
     {
         private readonly EnglishmaniaContext _context;
         private readonly DbSet<T> _dbSet;
@@ -19,7 +20,7 @@ namespace Englishmania.DAL.Repositories
             _dbSet = _context.Set<T>();
         }
 
-        public IList<T> GetAll()
+        public List<T> GetAll()
         {
             return _dbSet.AsNoTracking().ToList();
         }
@@ -31,10 +32,10 @@ namespace Englishmania.DAL.Repositories
 
         public T Get(Expression<Func<T, bool>> predicate)
         {
-            return _dbSet.Where(predicate).FirstOrDefault();
+            return _dbSet.FirstOrDefault(predicate);
         }
 
-        public IList<T> Find(Expression<Func<T, bool>> predicate)
+        public List<T> Find(Expression<Func<T, bool>> predicate)
         {
             return _dbSet.Where(predicate).ToList();
         }

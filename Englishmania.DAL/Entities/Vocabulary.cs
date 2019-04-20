@@ -1,6 +1,6 @@
 ﻿namespace Englishmania.DAL.Entities
 {
-    public class Vocabulary
+    public class Vocabulary : BaseEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

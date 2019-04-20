@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Englishmania.DAL.Entities
 {
-    public class UserVocabulary
+    public class UserVocabulary : BaseEntity
     {
         public int UserId { get; set; }
         public int VocabularyId { get; set; }

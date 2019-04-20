@@ -7,7 +7,7 @@ namespace Englishmania.BLL.Interfaces
 {
     public interface IVocabularyService
     {
-        IList<Vocabulary> GetByUser(int userId);
+        List<Vocabulary> GetByUser(int userId);
         double GetProgress(int userId, int vocabularyId);
 
     }
