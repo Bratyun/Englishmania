@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Englishmania.BLL.Dto;
+﻿using System.Collections.Generic;
 using Englishmania.BLL.Interfaces;
 using Englishmania.DAL.Entities;
 using Englishmania.DAL.Interfaces;
@@ -11,6 +7,7 @@ namespace Englishmania.BLL.Services
 {
     public class VocabularyService : IVocabularyService
     {
+        private const int NeedToLearn = 4;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWordService _wordService;
 
@@ -22,39 +19,33 @@ namespace Englishmania.BLL.Services
 
         public List<Vocabulary> GetByUser(int userId)
         {
-            List<UserVocabulary> userVocabularies = _unitOfWork.UserVocabularyRepository.Find(x => x.UserId == userId);
+            var userVocabularies = _unitOfWork.UserVocabularyRepository.Find(x => x.UserId == userId);
             if (userVocabularies == null) return new List<Vocabulary>();
-            List<Vocabulary> vocabularies = new List<Vocabulary>();
+            var vocabularies = new List<Vocabulary>();
             foreach (var item in userVocabularies)
             {
-                Vocabulary vocabulary = _unitOfWork.VocabularyRepository.Get(item.VocabularyId);
-                if (vocabulary != null)
-                {
-                    vocabularies.Add(vocabulary);
-                }
+                var vocabulary = _unitOfWork.VocabularyRepository.Get(item.VocabularyId);
+                if (vocabulary != null) vocabularies.Add(vocabulary);
             }
 
             return vocabularies;
         }
 
         /// <summary>
-        /// Returns progress by vocabulary
+        ///     Returns progress by vocabulary
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="vocabularyId"></param>
         /// <returns>Relation learned words to all count of words</returns>
         public double GetProgress(int userId, int vocabularyId)
         {
-            List<WordDto> words = _wordService.GetByVocabulary(userId, vocabularyId);
-            int countOfWords = _wordService.GetCountOfWords(userId, vocabularyId);
+            var words = _wordService.GetByVocabulary(userId, vocabularyId);
+            var countOfWords = _wordService.GetCountOfWords(userId, vocabularyId);
             if (countOfWords == 0) return countOfWords;
-            int learnedWords = 0;
-            foreach (var word in words)
-            {
-                learnedWords += word.Count;
-            }
+            var learnedWords = 0;
+            foreach (var word in words) learnedWords += word.Count;
 
-            return learnedWords / (double)countOfWords;
+            return learnedWords / ((double) countOfWords * NeedToLearn);
         }
     }
 }

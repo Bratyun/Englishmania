@@ -1,5 +1,4 @@
-﻿using System.Net;
-using Englishmania.DAL.Entities;
+﻿using Englishmania.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Englishmania.DAL.EF
@@ -22,23 +21,21 @@ namespace Englishmania.DAL.EF
         public DbSet<WordText> WordTexts { get; set; }
         public DbSet<WordUser> WordUsers { get; set; }
         public DbSet<WordVocabulary> WordVocabularies { get; set; }
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<TopicVocabulary>()
-                .HasKey(t => new { t.TopicId, t.VocabularyId });
+                .HasKey(t => new {t.TopicId, t.VocabularyId});
             modelBuilder.Entity<WordText>()
-                .HasKey(t => new { t.WordId, t.TextId });
+                .HasKey(t => new {t.WordId, t.TextId});
             modelBuilder.Entity<WordUser>()
-                .HasKey(t => new { t.WordId, t.UserId });
+                .HasKey(t => new {t.WordId, t.UserId});
             modelBuilder.Entity<WordVocabulary>()
-                .HasKey(t => new { t.WordId, t.VocabularyId });
+                .HasKey(t => new {t.WordId, t.VocabularyId});
             modelBuilder.Entity<UserVocabulary>()
-                .HasKey(t => new { t.UserId, t.VocabularyId });
-            modelBuilder.Entity<User>(entity => {
-                entity.HasIndex(t => t.Login).IsUnique();
-            });
+                .HasKey(t => new {t.UserId, t.VocabularyId});
+            modelBuilder.Entity<User>(entity => { entity.HasIndex(t => t.Login).IsUnique(); });
         }
     }
 }

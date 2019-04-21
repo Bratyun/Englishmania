@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Englishmania.DAL.Entities;
+﻿using Englishmania.DAL.Entities;
 
 namespace Englishmania.BLL.Interfaces
 {

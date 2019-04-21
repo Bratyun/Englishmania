@@ -22,7 +22,9 @@ namespace Englishmania.Web
     {
         public static readonly string Issuer = "EnglishmaniaServer";
         public static readonly TimeSpan LifeTime = new TimeSpan(24, 0, 0);
-        public static readonly string Key = "Pax7YTNcCnW0YcmUsPG4NKxIunK4aPC5yZYLhNdQGY4/KN+pQSnMzonUR5uLzVXycvI5DKWFGHePXbq0TKaIRg==";
+
+        public static readonly string Key =
+            "Pax7YTNcCnW0YcmUsPG4NKxIunK4aPC5yZYLhNdQGY4/KN+pQSnMzonUR5uLzVXycvI5DKWFGHePXbq0TKaIRg==";
 
         public Startup(IConfiguration configuration)
         {
@@ -45,15 +47,15 @@ namespace Englishmania.Web
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
-                    byte[] symmetricKey = Convert.FromBase64String(Key);
+                    var symmetricKey = Convert.FromBase64String(Key);
                     //options.RequireHttpsMetadata = false;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
                         ValidIssuer = Issuer,
-                        
+
                         ValidateLifetime = true,
-                        
+
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(symmetricKey),
 
@@ -72,6 +74,7 @@ namespace Englishmania.Web
             builder.RegisterType<VocabularyService>().As<IVocabularyService>();
             builder.RegisterType<WordService>().As<IWordService>();
             builder.RegisterType<UserService>().As<IUserService>();
+            builder.RegisterType<TopicService>().As<ITopicService>();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().PropertiesAutowired();
             builder.Populate(services);
 
@@ -83,13 +86,9 @@ namespace Englishmania.Web
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
             else
-            {
                 app.UseHsts();
-            }
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -98,8 +97,8 @@ namespace Englishmania.Web
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action}/{id?}");
+                    "default",
+                    "{controller}/{action}/{id?}");
             });
         }
     }

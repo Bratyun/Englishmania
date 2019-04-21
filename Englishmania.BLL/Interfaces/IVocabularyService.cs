@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Englishmania.DAL.Entities;
 
 namespace Englishmania.BLL.Interfaces
@@ -9,6 +7,5 @@ namespace Englishmania.BLL.Interfaces
     {
         List<Vocabulary> GetByUser(int userId);
         double GetProgress(int userId, int vocabularyId);
-
     }
 }

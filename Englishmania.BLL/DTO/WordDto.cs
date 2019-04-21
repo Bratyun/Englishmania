@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Englishmania.BLL.Dto
+﻿namespace Englishmania.BLL.Dto
 {
     public class WordDto
     {
