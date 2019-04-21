@@ -24,10 +24,10 @@ namespace Englishmania.Web.Controllers
             _userService = userService;
         }
 
-        [HttpGet("login")]
-        public ActionResult<string> Login(string login, string passwordHash)
+        [HttpPost("login")]
+        public ActionResult<string> Login([FromBody] LoginRequestModel model)
         {
-            ClaimsIdentity claims = GetIdentity(login, passwordHash);
+            ClaimsIdentity claims = GetIdentity(model.Login, model.PasswordHash);
             if (claims == null) return StatusCode(401);
 
             var now = DateTime.UtcNow;
@@ -56,6 +56,21 @@ namespace Englishmania.Web.Controllers
             };
             var claimsIdentity = new ClaimsIdentity(claims, "Token", TokenClaims.Name, TokenClaims.Login);
             return claimsIdentity;
+        }
+
+        [HttpPost("register")]
+        public IActionResult Register([FromBody] UserRegisterModel model)
+        {
+            bool exist = _userService.IsExist(model.Login, model.PasswordHash);
+            if (exist || !ModelState.IsValid) return StatusCode(409);
+            User user = new User()
+            {
+                Login = model.Login,
+                Name = model.Name,
+                PasswordHash = model.PasswordHash
+            };
+            _userService.Create(user);
+            return StatusCode(200);
         }
     }
 }
