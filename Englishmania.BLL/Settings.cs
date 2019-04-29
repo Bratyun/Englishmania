@@ -6,6 +6,6 @@ namespace Englishmania.BLL
 {
     public static class Settings
     {
-        private const int NeedToLearn = 4;
+        public const int NeedToLearn = 4;
     }
 }

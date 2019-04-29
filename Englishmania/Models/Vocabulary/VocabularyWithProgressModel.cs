@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Englishmania.Web.Models.Topic;
 
 namespace Englishmania.Web.Models.Vocabulary
 {

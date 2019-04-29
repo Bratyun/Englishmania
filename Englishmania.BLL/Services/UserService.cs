@@ -21,7 +21,7 @@ namespace Englishmania.BLL.Services
 
         public bool IsExist(string login, string passwordHash)
         {
-            return Get(login, passwordHash) == null;
+            return Get(login, passwordHash) != null;
         }
 
         public User Get(string login, string passwordHash)

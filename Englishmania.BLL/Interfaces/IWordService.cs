@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Englishmania.BLL.Dto;
+using Englishmania.DAL.Entities;
 
 namespace Englishmania.BLL.Interfaces
 {
@@ -8,5 +9,8 @@ namespace Englishmania.BLL.Interfaces
         List<WordDto> GetByVocabulary(int userId, int vocabularyId);
         int GetCountOfWords(int userId, int vocabularyId);
         int GetProgress(int userId, int wordId);
+        GameTranslationDto GetTranslationGameFromEngToRus(int userId);
+        GameTranslationDto GetTranslationGameFromRusToEng(int userId);
+        void SetWordProgress(int userId, GameTranslationResult model);
     }
 }
