@@ -1,6 +1,4 @@
-﻿using Englishmania.DAL.Entities;
-
-namespace Englishmania.Web.Models
+﻿namespace Englishmania.Web.Models.Topic
 {
     public class TopicModel
     {
@@ -8,7 +6,7 @@ namespace Englishmania.Web.Models
         {
         }
 
-        public TopicModel(Topic topic)
+        public TopicModel(DAL.Entities.Topic topic)
         {
             Id = topic.Id;
             Name = topic.Name;

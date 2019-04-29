@@ -7,7 +7,6 @@ namespace Englishmania.BLL.Services
 {
     public class VocabularyService : IVocabularyService
     {
-        private const int NeedToLearn = 4;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWordService _wordService;
 
@@ -32,11 +31,9 @@ namespace Englishmania.BLL.Services
         }
 
         /// <summary>
-        ///     Returns progress by vocabulary
+        ///     Returns progress by vocabulary, relation learned words to all count of words
         /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="vocabularyId"></param>
-        /// <returns>Relation learned words to all count of words</returns>
+        /// <returns></returns>
         public double GetProgress(int userId, int vocabularyId)
         {
             var words = _wordService.GetByVocabulary(userId, vocabularyId);
@@ -45,7 +42,22 @@ namespace Englishmania.BLL.Services
             var learnedWords = 0;
             foreach (var word in words) learnedWords += word.Count;
 
-            return learnedWords / ((double) countOfWords * NeedToLearn);
+            return learnedWords / ((double) countOfWords * Settings.NeedToLearn);
+        }
+
+        public double GetGlobalProgress(int userId)
+        {
+            List<Vocabulary> vocabularies = GetByUser(userId);
+            double res = 0;
+            var count = 0;
+            foreach (var vocabulary in vocabularies)
+            {
+                res += GetProgress(userId, vocabulary.Id);
+                count++;
+            }
+
+            if (count == 0) return 0;
+            return res / count;
         }
     }
 }

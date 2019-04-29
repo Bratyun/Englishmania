@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Englishmania.Web.Models
+namespace Englishmania.Web.Models.User
 {
     public class LoginRequestModel
     {

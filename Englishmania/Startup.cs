@@ -21,7 +21,7 @@ namespace Englishmania.Web
     public class Startup
     {
         public static readonly string Issuer = "EnglishmaniaServer";
-        public static readonly TimeSpan LifeTime = new TimeSpan(24, 0, 0);
+        public static readonly TimeSpan LifeTime = TimeSpan.FromHours(24);
 
         public static readonly string Key =
             "Pax7YTNcCnW0YcmUsPG4NKxIunK4aPC5yZYLhNdQGY4/KN+pQSnMzonUR5uLzVXycvI5DKWFGHePXbq0TKaIRg==";
