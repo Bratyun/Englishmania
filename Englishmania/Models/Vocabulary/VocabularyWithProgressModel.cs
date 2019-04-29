@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Englishmania.Web.Models
+namespace Englishmania.Web.Models.Vocabulary
 {
     public class VocabularyWithProgressModel
     {

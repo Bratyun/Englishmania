@@ -5,6 +5,9 @@ using System.Security.Claims;
 using Englishmania.BLL.Interfaces;
 using Englishmania.DAL.Entities;
 using Englishmania.Web.Models;
+using Englishmania.Web.Models.Topic;
+using Englishmania.Web.Models.User;
+using Englishmania.Web.Models.Vocabulary;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -30,7 +33,7 @@ namespace Englishmania.Web.Controllers
         }
 
         [HttpPost("login")]
-        public ActionResult<string> Login([FromBody] LoginRequestModel model)
+        public ActionResult<string> Login(LoginRequestModel model)
         {
             var claims = GetIdentity(model.Login, model.PasswordHash);
             if (claims == null) return StatusCode(401);
@@ -49,23 +52,9 @@ namespace Englishmania.Web.Controllers
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
             return encodedJwt;
         }
-
-        private ClaimsIdentity GetIdentity(string login, string passwordHash)
-        {
-            var user = _userService.Get(login, passwordHash);
-            if (user == null) return null;
-            var claims = new List<Claim>
-            {
-                new Claim(TokenClaims.Id, user.Id.ToString()),
-                new Claim(TokenClaims.Name, user.Name),
-                new Claim(TokenClaims.Login, user.Login)
-            };
-            var claimsIdentity = new ClaimsIdentity(claims, "Token", TokenClaims.Name, TokenClaims.Login);
-            return claimsIdentity;
-        }
-
+        
         [HttpPost("register")]
-        public IActionResult Register([FromBody] UserRegisterModel model)
+        public ActionResult Register(UserRegisterModel model)
         {
             var exist = _userService.IsExist(model.Login, model.PasswordHash);
             if (exist || !ModelState.IsValid) return StatusCode(409);
@@ -76,7 +65,7 @@ namespace Englishmania.Web.Controllers
                 PasswordHash = model.PasswordHash
             };
             _userService.Create(user);
-            return StatusCode(200);
+            return Ok();
         }
 
         [Authorize]
@@ -84,17 +73,10 @@ namespace Englishmania.Web.Controllers
         public ActionResult<double> GetGlobalProgress()
         {
             var userId = int.Parse(User.FindFirst(TokenClaims.Id).Value);
-            var vocabularies = _vocabularyService.GetByUser(userId);
-            double res = 0;
-            var count = 0;
-            foreach (var vocabulary in vocabularies)
-            {
-                res += _vocabularyService.GetProgress(userId, vocabulary.Id);
-                count++;
-            }
+            double result = _vocabularyService.GetGlobalProgress(userId);
 
-            if (count == 0) return StatusCode(404);
-            return res / count;
+            if (Math.Abs(result) < 0.001) return NotFound();
+            return result;
         }
 
         [Authorize]
@@ -121,6 +103,20 @@ namespace Englishmania.Web.Controllers
             }
 
             return results;
+        }
+
+        private ClaimsIdentity GetIdentity(string login, string passwordHash)
+        {
+            var user = _userService.Get(login, passwordHash);
+            if (user == null) return null;
+            var claims = new List<Claim>
+            {
+                new Claim(TokenClaims.Id, user.Id.ToString()),
+                new Claim(TokenClaims.Name, user.Name),
+                new Claim(TokenClaims.Login, user.Login)
+            };
+            var claimsIdentity = new ClaimsIdentity(claims, "Token", TokenClaims.Name, TokenClaims.Login);
+            return claimsIdentity;
         }
 
         private List<TopicModel> TopicsToModels(List<Topic> topics)

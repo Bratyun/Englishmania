@@ -7,5 +7,6 @@ namespace Englishmania.BLL.Interfaces
     {
         List<Vocabulary> GetByUser(int userId);
         double GetProgress(int userId, int vocabularyId);
+        double GetGlobalProgress(int userId);
     }
 }

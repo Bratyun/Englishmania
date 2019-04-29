@@ -40,11 +40,8 @@ namespace Englishmania.BLL.Services
         }
 
         /// <summary>
-        ///     Returns count of words in vocabulary
+        ///     Returns count of words in vocabulary, if this vocabulary does not found, method return 0
         /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="vocabularyId"></param>
-        /// <returns>If this vocabulary does not found, method return 0</returns>
         public int GetCountOfWords(int userId, int vocabularyId)
         {
             var wordVocabularies = _unitOfWork.WordVocabularyRepository.Find(x => x.VocabularyId == vocabularyId);
@@ -53,11 +50,8 @@ namespace Englishmania.BLL.Services
         }
 
         /// <summary>
-        ///     Returns count of word repeat
+        ///     Returns count of word repeat, if this word does not found, method return 0
         /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="wordId"></param>
-        /// <returns>If this word does not found, method return 0</returns>
         public int GetProgress(int userId, int wordId)
         {
             var progress = _unitOfWork.WordUserRepository.Get(x => x.UserId == userId && x.WordId == wordId);
