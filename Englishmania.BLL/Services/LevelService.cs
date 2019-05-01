@@ -7,7 +7,7 @@ using Englishmania.DAL.Interfaces;
 
 namespace Englishmania.BLL.Services
 {
-    class LevelService : ILevelService
+    public class LevelService : ILevelService
     {
         private readonly IUnitOfWork _unitOfWork;
 

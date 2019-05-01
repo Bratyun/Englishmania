@@ -75,6 +75,7 @@ namespace Englishmania.Web
             builder.RegisterType<WordService>().As<IWordService>();
             builder.RegisterType<UserService>().As<IUserService>();
             builder.RegisterType<TopicService>().As<ITopicService>();
+            builder.RegisterType<LevelService>().As<ILevelService>();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().PropertiesAutowired();
             builder.Populate(services);
 
