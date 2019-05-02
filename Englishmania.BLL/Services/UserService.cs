@@ -15,7 +15,24 @@ namespace Englishmania.BLL.Services
 
         public void Create(User model)
         {
+            var vocabulary = new Vocabulary
+            {
+                IsPrivate = true,
+                LevelId = 0,
+                Name = "Personal: " + model.Login
+            };
+            _unitOfWork.VocabularyRepository.Create(vocabulary);
+            var vocabularyWithId = _unitOfWork.VocabularyRepository.Get(x => x.Name == vocabulary.Name);
+            if (vocabularyWithId == null) return;
             _unitOfWork.UserRepository.Create(model);
+            var user = _unitOfWork.UserRepository.Get(x => x.Login == model.Login);
+            if (user == null) return;
+            var connect = new UserVocabulary
+            {
+                UserId = user.Id,
+                VocabularyId = vocabularyWithId.Id
+            };
+            _unitOfWork.UserVocabularyRepository.Create(connect);
             _unitOfWork.Commit();
         }
 
