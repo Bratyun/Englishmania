@@ -31,7 +31,10 @@ namespace Englishmania.Web.Controllers
             _vocabularyService = vocabularyService;
             _topicService = topicService;
         }
-
+        public class LoginResponseModel
+        {
+            public string Token { get; set; }
+        }
         [HttpPost("login")]
         public ActionResult<string> Login(LoginRequestModel model)
         {
