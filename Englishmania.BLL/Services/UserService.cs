@@ -22,9 +22,11 @@ namespace Englishmania.BLL.Services
                 Name = "Personal: " + model.Login
             };
             _unitOfWork.VocabularyRepository.Create(vocabulary);
+            _unitOfWork.Commit();
             var vocabularyWithId = _unitOfWork.VocabularyRepository.Get(x => x.Name == vocabulary.Name);
             if (vocabularyWithId == null) return;
             _unitOfWork.UserRepository.Create(model);
+            _unitOfWork.Commit();
             var user = _unitOfWork.UserRepository.Get(x => x.Login == model.Login);
             if (user == null) return;
             var connect = new UserVocabulary
