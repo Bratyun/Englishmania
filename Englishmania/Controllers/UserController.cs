@@ -36,7 +36,7 @@ namespace Englishmania.Web.Controllers
             public string Token { get; set; }
         }
         [HttpPost("login")]
-        public ActionResult<string> Login(LoginRequestModel model)
+        public ActionResult<LoginResponseModel> Login(LoginRequestModel model)
         {
             var claims = GetIdentity(model.Login, model.PasswordHash);
             if (claims == null) return StatusCode(401);
@@ -53,7 +53,7 @@ namespace Englishmania.Web.Controllers
                     SecurityAlgorithms.HmacSha256));
 
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-            return encodedJwt;
+            return new LoginResponseModel { Token = encodedJwt };
         }
         
         [HttpPost("register")]
