@@ -31,9 +31,12 @@ namespace Englishmania.Web.Controllers
             _vocabularyService = vocabularyService;
             _topicService = topicService;
         }
-
+        public class LoginResponseModel
+        {
+            public string Token { get; set; }
+        }
         [HttpPost("login")]
-        public ActionResult<string> Login(LoginRequestModel model)
+        public ActionResult<LoginResponseModel> Login(LoginRequestModel model)
         {
             var claims = GetIdentity(model.Login, model.PasswordHash);
             if (claims == null) return StatusCode(401);
@@ -50,7 +53,7 @@ namespace Englishmania.Web.Controllers
                     SecurityAlgorithms.HmacSha256));
 
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-            return encodedJwt;
+            return new LoginResponseModel { Token = encodedJwt };
         }
         
         [HttpPost("register")]
@@ -61,7 +64,7 @@ namespace Englishmania.Web.Controllers
             var user = new User
             {
                 Login = model.Login,
-                Name = model.Name,
+                Email = model.Email,
                 PasswordHash = model.PasswordHash
             };
             _userService.Create(user);
@@ -74,8 +77,7 @@ namespace Englishmania.Web.Controllers
         {
             var userId = int.Parse(User.FindFirst(TokenClaims.Id).Value);
             double result = _vocabularyService.GetGlobalProgress(userId);
-
-            if (Math.Abs(result) < 0.001) return NotFound();
+            
             return result;
         }
 
@@ -112,10 +114,9 @@ namespace Englishmania.Web.Controllers
             var claims = new List<Claim>
             {
                 new Claim(TokenClaims.Id, user.Id.ToString()),
-                new Claim(TokenClaims.Name, user.Name),
                 new Claim(TokenClaims.Login, user.Login)
             };
-            var claimsIdentity = new ClaimsIdentity(claims, "Token", TokenClaims.Name, TokenClaims.Login);
+            var claimsIdentity = new ClaimsIdentity(claims, "Token", TokenClaims.Login, TokenClaims.Login);
             return claimsIdentity;
         }
 

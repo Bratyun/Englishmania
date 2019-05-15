@@ -28,5 +28,33 @@ namespace Englishmania.BLL.Services
 
             return results;
         }
+
+        public void Create(Topic model)
+        {
+            bool isExist = this.IsExist(model.Name);
+            if (isExist)
+            {
+                return;
+            }
+
+            _unitOfWork.TopicRepository.Create(model);
+            _unitOfWork.Commit();
+        }
+
+        public bool IsExist(string topicName)
+        {
+            return null != _unitOfWork.TextRepository.Get(x => x.Name == topicName);
+        }
+
+        public Topic GetByName(string name)
+        {
+            var result = _unitOfWork.TopicRepository.Get(x => x.Name == name);
+            if (result == null)
+            {
+                return new Topic();
+            }
+
+            return result;
+        }
     }
 }

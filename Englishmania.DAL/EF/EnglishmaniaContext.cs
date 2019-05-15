@@ -36,6 +36,22 @@ namespace Englishmania.DAL.EF
             modelBuilder.Entity<UserVocabulary>()
                 .HasKey(t => new {t.UserId, t.VocabularyId});
             modelBuilder.Entity<User>(entity => { entity.HasIndex(t => t.Login).IsUnique(); });
+            modelBuilder.Entity<Level>().HasData(
+                new Level
+                {
+                    Id = 1,
+                    Name = "Low"
+                },
+                new Level
+                {
+                    Id = 2,
+                    Name = "Medium"
+                },
+                new Level
+                {
+                    Id = 3,
+                    Name = "High"
+                });
         }
     }
 }

@@ -59,5 +59,95 @@ namespace Englishmania.BLL.Services
             if (count == 0) return 0;
             return res / count;
         }
+
+        public void ConnectUserWithDictionary(int userId, int vocabularyId)
+        {
+            var user = _unitOfWork.UserRepository.Get(userId);
+            if (user == null)
+            {
+                return;
+            }
+
+            var vocabulary = _unitOfWork.VocabularyRepository.Get(vocabularyId);
+            if (vocabulary == null)
+            {
+                return;
+            }
+
+            var userVocabulary =
+                _unitOfWork.UserVocabularyRepository.Get(x => x.UserId == userId && x.VocabularyId == vocabularyId);
+            if (userVocabulary != null)
+            {
+                return;
+            }
+
+            var model = new UserVocabulary
+            {
+                UserId = userId,
+                VocabularyId = vocabularyId
+            };
+
+            _unitOfWork.UserVocabularyRepository.Create(model);
+            _unitOfWork.Commit();
+
+            var words = _wordService.GetByVocabulary(userId, vocabularyId);
+            foreach (var word in words)
+            {
+                _wordService.AddToUser(userId, word.Id);
+            }
+        }
+
+        public void Create(Vocabulary model)
+        {
+            bool isExist = this.IsExist(model.Name);
+            if (isExist)
+            {
+                return;
+            }
+
+            _unitOfWork.VocabularyRepository.Create(model);
+            _unitOfWork.Commit();
+        }
+
+        public bool IsExist(string vocabularyName)
+        {
+            return null != _unitOfWork.VocabularyRepository.Get(x => x.Name == vocabularyName);
+        }
+
+        public void AddWord(int wordId, int vocabularyId)
+        {
+            var word = _unitOfWork.WordRepository.Get(wordId);
+            var vocabulary = _unitOfWork.VocabularyRepository.Get(vocabularyId);
+            if (word == null || vocabulary == null)
+            {
+                return;
+            }
+
+            var old = _unitOfWork.WordVocabularyRepository.Get(
+                x => x.WordId == wordId && x.VocabularyId == vocabularyId);
+            if (old != null)
+            {
+                return;
+            }
+
+            var model = new WordVocabulary
+            {
+                WordId = wordId,
+                VocabularyId = vocabularyId
+            };
+            _unitOfWork.WordVocabularyRepository.Create(model);
+            _unitOfWork.Commit();
+        }
+
+        public Vocabulary GetByName(string name)
+        {
+            bool res = this.IsExist(name);
+            if (res)
+            {
+                return _unitOfWork.VocabularyRepository.Get(x => x.Name == name);
+            }
+
+            return new Vocabulary();
+        }
     }
 }
