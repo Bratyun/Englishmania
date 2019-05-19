@@ -103,6 +103,7 @@ namespace Englishmania.BLL.Services
             if (words.Count < 4) return words;
 
             var resultWords = ChooseByLevel(user, words);
+            if (resultWords.Count < 4) return words;
             return resultWords;
         }
 
