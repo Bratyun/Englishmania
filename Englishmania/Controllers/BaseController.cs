@@ -32,7 +32,6 @@ namespace Englishmania.Web.Controllers
         private object lockObj = new Object();
 
         [HttpGet("init")]
-        [Authorize(Roles = "Roman")]
         public void UpdateDb()
         {
             lock (lockObj)

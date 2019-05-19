@@ -7,7 +7,6 @@ namespace Englishmania.DAL.EF
     {
         public EnglishmaniaContext(DbContextOptions<EnglishmaniaContext> options) : base(options)
         {
-            Database.EnsureCreated();
         }
 
         public DbSet<Level> Levels { get; set; }

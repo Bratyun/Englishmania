@@ -30,20 +30,14 @@ namespace Englishmania.BLL.Services
 
             return words;
         }
-
-        /// <summary>
-        ///     Returns count of words in vocabulary, if this vocabulary does not found, method return 0
-        /// </summary>
+        
         public int GetCountOfWords(int userId, int vocabularyId)
         {
             var wordVocabularies = _unitOfWork.WordVocabularyRepository.Find(x => x.VocabularyId == vocabularyId);
             if (wordVocabularies == null) return 0;
             return wordVocabularies.Count;
         }
-
-        /// <summary>
-        ///     Returns count of word repeat, if this word does not found, method return 0
-        /// </summary>
+        
         public int GetProgress(int userId, int wordId)
         {
             var progress = _unitOfWork.WordUserRepository.Get(x => x.UserId == userId && x.WordId == wordId);

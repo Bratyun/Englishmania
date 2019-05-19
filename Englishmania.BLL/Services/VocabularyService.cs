@@ -19,7 +19,7 @@ namespace Englishmania.BLL.Services
 
         public List<Vocabulary> GetAll()
         {
-            return _unitOfWork.VocabularyRepository.GetAll().Where(x => !x.IsPrivate).ToList();
+            return _unitOfWork.VocabularyRepository.GetAll().Where(x => x.IsPrivate == false).ToList();
         }
 
         public List<Vocabulary> GetByUser(int userId)

@@ -31,10 +31,12 @@ namespace Englishmania.Web.Controllers
             _vocabularyService = vocabularyService;
             _topicService = topicService;
         }
+
         public class LoginResponseModel
         {
             public string Token { get; set; }
         }
+
         [HttpPost("login")]
         public ActionResult<LoginResponseModel> Login(LoginRequestModel model)
         {
@@ -56,6 +58,7 @@ namespace Englishmania.Web.Controllers
             return new LoginResponseModel { Token = encodedJwt };
         }
 
+        [Authorize]
         [HttpGet("profile")]
         public ActionResult<UserProfile> Profile()
         {
@@ -125,16 +128,31 @@ namespace Englishmania.Web.Controllers
             return results;
         }
 
+        [Authorize]
         [HttpGet("dictionaries-all")]
-        public ActionResult<List<Vocabulary>> GetDictionariesAll()
+        public ActionResult<List<VocabularyWithWords>> GetDictionariesAll()
         {
-            var result = _vocabularyService.GetAll();
-            if (result == null)
+            var userId = int.Parse(User.FindFirst(TokenClaims.Id).Value);
+            var dictionariesAll = _vocabularyService.GetAll();
+            if (dictionariesAll == null)
             {
-                return new List<Vocabulary>();
+                return NotFound();
             }
 
-            return result;
+            List<VocabularyWithWords> models = new List<VocabularyWithWords>();
+            foreach (var item in dictionariesAll)
+            {
+                var obj = new VocabularyWithWords
+                {
+                    Id = item.Id,
+                    IsPrivate = item.IsPrivate,
+                    Name = item.Name,
+                    LevelId = item.LevelId,
+                    Words = _wordService.GetByVocabulary(userId, item.Id)
+                };
+                models.Add(obj);
+            }
+            return models;
         }
 
         [Authorize]

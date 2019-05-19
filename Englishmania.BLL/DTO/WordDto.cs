@@ -21,7 +21,7 @@ namespace Englishmania.BLL.Dto
             var word = unitOfWork.WordRepository.Get(wordId);
             var wordUser = unitOfWork.WordUserRepository.Get(x => x.WordId == word.Id && x.UserId == userId);
             var user = unitOfWork.UserRepository.Get(userId);
-            if (word == null || user == null)
+            if (word == null)
             {
                 Id = 0;
                 Count = 0;
@@ -35,7 +35,7 @@ namespace Englishmania.BLL.Dto
             Count = wordUser?.Count ?? 0;
             English = word.English;
             Russian = word.Russian;
-            UserId = userId;
+            UserId = user?.Id ?? 0;
         }
     }
 }
