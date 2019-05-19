@@ -38,7 +38,7 @@ namespace Englishmania.Web.Controllers
             return model;
         }
 
-        [HttpPut("rus-to-eng-translation")]
+        [HttpPut("translation-result")]
         public ActionResult WordToTranslationResult(GameTranslationResult model)
         {
             int userId = int.Parse(User.FindFirst(TokenClaims.Id).Value);

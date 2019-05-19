@@ -55,6 +55,24 @@ namespace Englishmania.Web.Controllers
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
             return new LoginResponseModel { Token = encodedJwt };
         }
+
+        [HttpGet("profile")]
+        public ActionResult<UserProfile> Profile()
+        {
+            int id = int.Parse(User.FindFirst(TokenClaims.Id).Value);
+            var user =_userService.Get(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return new UserProfile
+            {
+                Id = user.Id,
+                Email = user.Email,
+                Login = user.Login
+            };
+        }
         
         [HttpPost("register")]
         public ActionResult Register(UserRegisterModel model)
@@ -105,6 +123,27 @@ namespace Englishmania.Web.Controllers
             }
 
             return results;
+        }
+
+        [HttpGet("dictionaries-all")]
+        public ActionResult<List<Vocabulary>> GetDictionariesAll()
+        {
+            var result = _vocabularyService.GetAll();
+            if (result == null)
+            {
+                return new List<Vocabulary>();
+            }
+
+            return result;
+        }
+
+        [Authorize]
+        [HttpPut("dictionaries/{id}")]
+        public ActionResult SetDictionaryForUser(int id)
+        {
+            var userId = int.Parse(User.FindFirst(TokenClaims.Id).Value);
+            _vocabularyService.ConnectUserWithDictionary(userId, id);
+            return StatusCode(200);
         }
 
         private ClaimsIdentity GetIdentity(string login, string passwordHash)

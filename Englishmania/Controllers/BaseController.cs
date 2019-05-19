@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Englishmania.BLL.Interfaces;
 using Englishmania.DAL.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,6 +32,7 @@ namespace Englishmania.Web.Controllers
         private object lockObj = new Object();
 
         [HttpGet("init")]
+        [Authorize(Roles = "Roman")]
         public void UpdateDb()
         {
             lock (lockObj)

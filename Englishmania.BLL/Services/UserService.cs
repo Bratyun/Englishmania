@@ -47,5 +47,10 @@ namespace Englishmania.BLL.Services
         {
             return _unitOfWork.UserRepository.Get(x => x.Login == login && x.PasswordHash == passwordHash);
         }
+
+        public User Get(int id)
+        {
+            return _unitOfWork.UserRepository.Get(id);
+        }
     }
 }

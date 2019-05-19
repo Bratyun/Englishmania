@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Englishmania.BLL.Interfaces;
 using Englishmania.DAL.Entities;
 using Englishmania.DAL.Interfaces;
@@ -14,6 +15,11 @@ namespace Englishmania.BLL.Services
         {
             _unitOfWork = unitOfWork;
             _wordService = wordService;
+        }
+
+        public List<Vocabulary> GetAll()
+        {
+            return _unitOfWork.VocabularyRepository.GetAll().Where(x => !x.IsPrivate).ToList();
         }
 
         public List<Vocabulary> GetByUser(int userId)
