@@ -89,6 +89,15 @@ namespace Englishmania.Web.Controllers
                 PasswordHash = model.PasswordHash
             };
             _userService.Create(user);
+            var dictionaries = _vocabularyService.GetAll();
+            if (dictionaries != null)
+            {
+                foreach (var dictionary in dictionaries)
+                {
+                    _vocabularyService.ConnectUserWithDictionary(user.Id, dictionary.Id);
+                }
+            }
+
             return Ok();
         }
 
