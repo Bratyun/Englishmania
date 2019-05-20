@@ -8,5 +8,6 @@ namespace Englishmania.BLL.Interfaces
         bool IsExist(string login, string passwordHash);
         User Get(string login, string passwordHash);
         User Get(int id);
+        void UpdateLevel(int userId, int levelId);
     }
 }

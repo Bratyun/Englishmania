@@ -52,5 +52,15 @@ namespace Englishmania.BLL.Services
         {
             return _unitOfWork.UserRepository.Get(id);
         }
+
+        public void UpdateLevel(int userId, int levelId)
+        {
+            var old = _unitOfWork.UserRepository.Get(userId);
+            if (old == null) return;
+
+            old.LevelId = levelId;
+            _unitOfWork.UserRepository.Update(old);
+            _unitOfWork.Commit();
+        }
     }
 }

@@ -73,10 +73,20 @@ namespace Englishmania.Web.Controllers
             {
                 Id = user.Id,
                 Email = user.Email,
-                Login = user.Login
+                Login = user.Login,
+                LevelId = user.LevelId
             };
         }
-        
+
+        [Authorize]
+        [HttpPut("difficulty/{id}")]
+        public ActionResult SetDifficulty(int id)
+        {
+            int userId = int.Parse(User.FindFirst(TokenClaims.Id).Value);
+            _userService.UpdateLevel(userId, id);
+            return Ok();
+        }
+
         [HttpPost("register")]
         public ActionResult Register(UserRegisterModel model)
         {
