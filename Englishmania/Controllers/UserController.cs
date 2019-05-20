@@ -156,6 +156,27 @@ namespace Englishmania.Web.Controllers
         }
 
         [Authorize]
+        [HttpGet("dictionaries/{id}")]
+        public ActionResult<VocabularyWithWords> GetDictionary(int id)
+        {
+            var userId = int.Parse(User.FindFirst(TokenClaims.Id).Value);
+            var dictionary = _vocabularyService.Get(id);
+            if (dictionary == null)
+            {
+                return NotFound();
+            }
+            
+            return new VocabularyWithWords
+            {
+                Id = dictionary.Id,
+                IsPrivate = dictionary.IsPrivate,
+                Name = dictionary.Name,
+                LevelId = dictionary.LevelId,
+                Words = _wordService.GetByVocabulary(userId, dictionary.Id)
+            };
+        }
+
+        [Authorize]
         [HttpPut("dictionaries/{id}")]
         public ActionResult SetDictionaryForUser(int id)
         {

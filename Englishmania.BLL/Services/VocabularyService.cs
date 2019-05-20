@@ -22,6 +22,11 @@ namespace Englishmania.BLL.Services
             return _unitOfWork.VocabularyRepository.GetAll().Where(x => x.IsPrivate == false).ToList();
         }
 
+        public Vocabulary Get(int id)
+        {
+            return _unitOfWork.VocabularyRepository.Get(id);
+        }
+
         public List<Vocabulary> GetByUser(int userId)
         {
             var userVocabularies = _unitOfWork.UserVocabularyRepository.Find(x => x.UserId == userId);

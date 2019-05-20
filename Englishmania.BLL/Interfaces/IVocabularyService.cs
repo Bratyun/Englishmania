@@ -6,6 +6,7 @@ namespace Englishmania.BLL.Interfaces
     public interface IVocabularyService
     {
         List<Vocabulary> GetAll();
+        Vocabulary Get(int id);
         List<Vocabulary> GetByUser(int userId);
         double GetProgress(int userId, int vocabularyId);
         double GetGlobalProgress(int userId);
