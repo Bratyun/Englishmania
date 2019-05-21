@@ -62,6 +62,17 @@ namespace Englishmania.Web
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDbContext<EnglishmaniaContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            
+            services.AddCors(options =>
+            {
+                options.AddPolicy("default", policy =>
+                {
+                    policy
+                        .AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
 
             var builder = new ContainerBuilder();
             builder.RegisterGeneric(typeof(GenericRepository<>)).As(typeof(IRepository<>));
@@ -86,6 +97,7 @@ namespace Englishmania.Web
             else
                 app.UseHsts();
 
+            app.UseCors("default");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
