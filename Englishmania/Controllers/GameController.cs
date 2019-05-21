@@ -6,11 +6,13 @@ using Englishmania.BLL.Dto;
 using Englishmania.BLL.Interfaces;
 using Englishmania.Web.Models;
 using Englishmania.Web.Models.Game;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Englishmania.Web.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class GameController : ControllerBase
