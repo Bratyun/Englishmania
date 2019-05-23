@@ -28,7 +28,7 @@ namespace Englishmania.BLL.Services
             if (words.Count < 4) return new GameTranslationDto();
 
             int a = 0, b = 0, c = 0, d = 0;
-            while (!((a != b) && (a != c) && (a != d) && (b != c) && (b != d) && (c != d)))
+            while (a == b || a == c || a == d || b == c || b == d || c == d)
             {
                 a = _random.Next(0, words.Count);
                 b = _random.Next(0, words.Count);
@@ -54,7 +54,7 @@ namespace Englishmania.BLL.Services
             if (words.Count < 4) return new GameTranslationDto();
 
             int a = 0, b = 0, c = 0, d = 0;
-            while (a != b && a != c && a != d && b != c && b != d && c != d)
+            while (a == b || a == c || a == d || b == c || b == d || c == d)
             {
                 a = _random.Next(0, words.Count);
                 b = _random.Next(0, words.Count);
