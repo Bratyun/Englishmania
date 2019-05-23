@@ -108,6 +108,31 @@ namespace Englishmania.BLL.Services
             }
         }
 
+        public void DeleteDictionaryFromUser(int userId, int vocabularyId)
+        {
+            var user = _unitOfWork.UserRepository.Get(userId);
+            if (user == null)
+            {
+                return;
+            }
+
+            var vocabulary = _unitOfWork.VocabularyRepository.Get(vocabularyId);
+            if (vocabulary == null)
+            {
+                return;
+            }
+
+            var userVocabulary =
+                _unitOfWork.UserVocabularyRepository.Get(x => x.UserId == userId && x.VocabularyId == vocabularyId);
+            if (userVocabulary == null)
+            {
+                return;
+            }
+
+            _unitOfWork.UserVocabularyRepository.Delete(userVocabulary);
+            _unitOfWork.Commit();
+        }
+
         public void Create(Vocabulary model)
         {
             bool isExist = this.IsExist(model.Name);

@@ -55,5 +55,10 @@ namespace Englishmania.DAL.Repositories
             var item = Get(id);
             if (item != null) _dbSet.Remove(item);
         }
+
+        public void Delete(T entity)
+        {
+            _dbSet.Remove(entity);
+        }
     }
 }
