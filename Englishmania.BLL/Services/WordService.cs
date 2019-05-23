@@ -98,5 +98,10 @@ namespace Englishmania.BLL.Services
 
             return new Word();
         }
+
+        public Word Get(int wordId)
+        {
+            return _unitOfWork.WordRepository.Get(x => x.Id == wordId) ?? new Word();
+        }
     }
 }

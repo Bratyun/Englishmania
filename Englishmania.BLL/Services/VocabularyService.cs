@@ -185,5 +185,27 @@ namespace Englishmania.BLL.Services
 
             return new Vocabulary();
         }
+
+        public void AddCustomWord(int userid, Word word)
+        {
+            _wordService.Create(word);
+            word = _wordService.GetByEng(word.English);
+            Vocabulary ownVocabulary = GetByUser(userid).First(v => v.IsPrivate);
+            AddWord(word.Id, ownVocabulary.Id);
+            _wordService.AddToUser(userid, word.Id);
+        }
+
+        public void DeleteCustomWord(int userid, int wordId)
+        {
+            Word word = _wordService.Get(wordId);
+            Vocabulary ownVocabulary = GetByUser(userid).First(v => v.IsPrivate);
+            var model = new WordVocabulary
+            {
+                VocabularyId = ownVocabulary.Id,
+                WordId = word.Id
+            };
+            _unitOfWork.WordVocabularyRepository.Delete(model);
+            _unitOfWork.Commit();
+        }
     }
 }

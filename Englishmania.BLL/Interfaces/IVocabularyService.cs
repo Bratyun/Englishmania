@@ -16,5 +16,7 @@ namespace Englishmania.BLL.Interfaces
         bool IsExist(string vocabularyName);
         void AddWord(int wordId, int vocabularyId);
         Vocabulary GetByName(string name);
+        void AddCustomWord(int userId, Word word);
+        void DeleteCustomWord(int userId, int wordId);
     }
 }

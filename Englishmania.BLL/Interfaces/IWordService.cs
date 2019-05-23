@@ -13,5 +13,6 @@ namespace Englishmania.BLL.Interfaces
         void Create(Word word);
         bool IsExist(string englishName);
         Word GetByEng(string englishName);
+        Word Get(int wordId);
     }
 }

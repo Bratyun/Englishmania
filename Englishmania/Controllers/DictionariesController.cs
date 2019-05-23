@@ -19,12 +19,37 @@ namespace Englishmania.Web.Controllers
         private readonly IVocabularyService _vocabularyService;
         private readonly IWordService _wordService;
 
-        public DictionariesController(IWordService wordService, IVocabularyService vocabularyService,
-            ITopicService topicService)
+        public DictionariesController(IWordService wordService, IVocabularyService vocabularyService, ITopicService topicService)
         {
             _wordService = wordService;
             _vocabularyService = vocabularyService;
             _topicService = topicService;
+        }
+
+        [HttpGet("all")]
+        public ActionResult<List<VocabularyWithWords>> GetDictionariesAll()
+        {
+            var userId = int.Parse(User.FindFirst(TokenClaims.Id).Value);
+            var dictionariesAll = _vocabularyService.GetAll();
+            if (dictionariesAll == null)
+            {
+                return NotFound();
+            }
+
+            List<VocabularyWithWords> models = new List<VocabularyWithWords>();
+            foreach (var item in dictionariesAll)
+            {
+                var obj = new VocabularyWithWords
+                {
+                    Id = item.Id,
+                    IsPrivate = item.IsPrivate,
+                    Name = item.Name,
+                    LevelId = item.LevelId,
+                    Words = _wordService.GetByVocabulary(userId, item.Id)
+                };
+                models.Add(obj);
+            }
+            return models;
         }
 
         [HttpGet]
@@ -50,32 +75,6 @@ namespace Englishmania.Web.Controllers
             }
 
             return results;
-        }
-        
-        [HttpGet("all")]
-        public ActionResult<List<VocabularyWithWords>> GetDictionariesAll()
-        {
-            var userId = int.Parse(User.FindFirst(TokenClaims.Id).Value);
-            var dictionariesAll = _vocabularyService.GetAll();
-            if (dictionariesAll == null)
-            {
-                return NotFound();
-            }
-
-            List<VocabularyWithWords> models = new List<VocabularyWithWords>();
-            foreach (var item in dictionariesAll)
-            {
-                var obj = new VocabularyWithWords
-                {
-                    Id = item.Id,
-                    IsPrivate = item.IsPrivate,
-                    Name = item.Name,
-                    LevelId = item.LevelId,
-                    Words = _wordService.GetByVocabulary(userId, item.Id)
-                };
-                models.Add(obj);
-            }
-            return models;
         }
         
         [HttpGet("{id}")]
